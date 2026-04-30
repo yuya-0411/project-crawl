@@ -242,6 +242,16 @@
             margin-top: 6px;
             text-align: left;
         }
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            object-fit: contain;
+            background-color: #111;
+        }
     </style>
 </head>
 <body>
@@ -265,7 +275,7 @@
         </div>
 
         <div class="funding-note">
-            This work was supported by OU-SPRING, and MEXT/JSPS KAKENHI Grant Number 23K03775.
+            This work was supported by OU-SPRING, JSPS KAKENHI Grant Number 26K07423, and JSPS KAKENHI Grant Number 26K21350..
         </div>
 
         <div class="buttons">
@@ -279,11 +289,11 @@
                 Model
                 <span class="coming-soon">Coming Soon</span>
             </a>
-            <a href="#" class="button" style="cursor: default;">
+            <!-- <a href="#" class="button" style="cursor: default;">
                 <img src="assets/icons/youtube.svg" class="button-icon" alt="YouTube icon">
                 Video
                 <span class="coming-soon">Coming Soon</span>
-            </a>
+            </a> -->
         </div>
     </header>
 
@@ -291,31 +301,52 @@
         <div class="abstract">
             <h2>Abstract</h2>
             <p>
-                Traditional gait design for snake robots has long relied on geometric models inspired by biological snakes.
-                However, due to the inherent morphological discrepancies between biological snakes and robotic systems,
-                these conventional models are not always optimal for snake robots. In this study, we propose an adaptive
-                gait that exploits the robot's unique dynamics without depending on predefined geometric models. Utilizing
-                the highly parallel physics simulator NVIDIA Isaac Lab and the RSL-RL library, we conducted locomotion
-                task training for a snake robot with ten redundant degrees of freedom (DoF) across random step fields.
-                Experimental results demonstrated that the acquired policy autonomously emerged dynamic gaits capable of
-                traversing unstructured terrains where conventional locomotion based on simple sine waves typically fails.
-                The robot effectively utilized environmental protrusions as leverage for propulsion, three-dimensionally
-                transforming its body to overcome obstacles. Although these gaits deviate from mathematically predefined
-                periodic motions, they exhibit rational characteristics approximating biological sidewinding as a direct
-                consequence of physical constraints. Comparative experiments with geometric models validated that the
-                learned policy possesses enhanced robustness and environmental adaptability in rugged terrains. Our
-                findings suggest that locomotion strategies leveraging a robot's unique embodiment can further enhance
-                performance, extending the capabilities of snake robots beyond the conventional framework of pure
-                biomimetics.
+                Traditional gait design for snake robots has long relied on
+                geometric models inspired by biological snakes. However, due to the inherent
+                morphological discrepancies between biological snakes and robotic
+                systems, these conventional models are not always optimal for snake
+                robots. In this study, we conducted locomotion task training for a snake
+                robot with ten redundant degrees of freedom (DoF) across random step
+                fields. Experimental results demonstrated that the acquired policy autonomously
+                emerged dynamic gaits capable of traversing unstructured
+                terrains where conventional locomotion based on simple sine waves typically
+                fails. The robot effectively utilized environmental protrusions as
+                pivot points for propulsion, three-dimensionally transforming its body
+                to overcome obstacles. Although these gaits deviate from mathematically
+                predefined periodic motions, they exhibit rational characteristics
+                approximating biological sidewinding as a direct consequence of physical
+                constraints. Comparative experiments with geometric models validated
+                that the learned policy possesses enhanced robustness and environmental
+                adaptability in rugged terrains. Our findings suggest that locomotion
+                strategies leveraging a robot’s unique embodiment can further enhance
+                performance, extending the capabilities of snake robots beyond the conventional
+                framework of pure biomimetics.
             </p>
         </div>
+
+        <section id="overview-video">
+            <h2 class="category-title">Overview Video</h2>
+            <div class="full-width-figure">
+                <div class="video-container">
+                    <video controls controlslist="nodownload" disablepictureinpicture playsinline preload="metadata">
+                        <source src="assets/videos/dars2026_video_compressed.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <p class="video-caption">
+                    Overview video of the proposed snake robot locomotion learned through reinforcement learning.
+                </p>
+            </div>
+        </section>
+
+        <section id="method">
 
         <section id="method">
             <h2 class="category-title">Method</h2>
             <div class="method-grid">
                 <div class="method-card">
                     <h3>Robot Model</h3>
-                    <p>11-link snake robot with 10 alternating yaw/pitch joints. Total length: 1,600 mm. Servomotor: XM540-W270R (Robotis), max angular velocity 6 rad/s during training.</p>
+                    <p>11-link snake robot with 10 alternating yaw/pitch joints. Total length: 1.6 m. Each link has a tactile sensor.</p>
                 </div>
                 <div class="method-card">
                     <h3>Observation Space (56-D)</h3>
@@ -327,13 +358,15 @@
                 </div>
             </div>
             <div class="full-width-figure">
-                <div class="figure-placeholder">
-                    <div class="figure-placeholder-inner">
-                        <strong>Fig. 2</strong><br>Procedural training environments:<br>
-                        (A) Pyramidal Stairs &amp; Pits &nbsp; (B) Random Grid (Boxes) &nbsp; (C) Random Rough Surface &nbsp; (D) Pyramidal Slopes
-                    </div>
+                <div class="figure-container">
+                    <img src="assets/figures/framework.png" alt="Overview of the proposed framework">
                 </div>
-                <p class="figure-caption"><strong>Fig. 2:</strong> Procedural training environments. Four terrain types are randomly generated to train diverse locomotion strategies. Place <code>assets/figures/fig2_terrain.png</code> here.</p>
+                <p class="figure-caption">
+                    <strong>Fig. 2:</strong> Overview of the proposed framework. 
+                    The policy πθ receives a 56-dimensional state st, in which per-link contact forces 
+                    F<sub>contact</sub> (highlighted) enable the robot to sense physical terrain interactions 
+                    and emerge adaptive gaits without a predefined template.
+                </p>
             </div>
         </section>
 
@@ -346,12 +379,12 @@
             </p>
             <div class="results-grid">
                 <div class="result-item">
-                    <div class="figure-placeholder">
-                        <div class="figure-placeholder-inner">
-                            <strong>Fig. 1</strong><br>Snake robot overview<br><em>(11 links, 10 joints)</em>
-                        </div>
+                    <div class="figure-container">
+                        <img src="assets/figures/robot_overview.png" alt="Snake robot overview">
                     </div>
-                    <p class="figure-caption"><strong>Fig. 1:</strong> Overview of the snake robot. Place <code>assets/figures/fig1_robot.png</code> here.</p>
+                    <p class="figure-caption">
+                        <strong>Fig. 1:</strong> Overview of the snake robot (11 links, 10 joints).
+                    </p>
                 </div>
                 <div class="result-item">
                     <div class="figure-placeholder">
@@ -370,12 +403,12 @@
                     <p class="figure-caption"><strong>Fig. 3(a):</strong> Joint angles of the learned policy on flat ground. The policy dynamically adjusts amplitude and period of each joint in response to the immediate state. Place <code>assets/figures/fig3a_learned.png</code> here.</p>
                 </div>
                 <div class="result-item">
-                    <div class="figure-placeholder">
-                        <div class="figure-placeholder-inner">
-                            <strong>Fig. 4</strong><br>Center-of-mass trajectories<br><em>Learned vs. geometric model</em>
-                        </div>
+                    <div class="figure-container">
+                        <img src="assets/figures/trajectories.png" alt="Center-of-mass trajectories comparison">
                     </div>
-                    <p class="figure-caption"><strong>Fig. 4:</strong> Comparison of center-of-mass (CoM) trajectories. The RL policy exhibits greater robustness and adaptability. Place <code>assets/figures/fig4_com.png</code> here.</p>
+                    <p class="figure-caption">
+                        <strong>Fig. 4:</strong> Comparison of center-of-mass (CoM) trajectories between the learned RL policy and the geometric model. The RL policy exhibits greater robustness and adaptability.
+                    </p>
                 </div>
             </div>
         </section>
@@ -389,47 +422,47 @@
             <div class="results-grid">
                 <div class="result-item">
                     <div class="video-container">
-                        <!-- Replace with: <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
-                        <div class="video-placeholder">
-                            <div class="play-icon">▶</div>
-                            <strong>Coming Soon</strong>
-                            <span style="margin-top:4px;">Learned policy — Rough terrain</span>
-                        </div>
+                        <video controls controlslist="nodownload" disablepictureinpicture playsinline preload="metadata">
+                            <source src="assets/videos/trained_model_terrain_revised_compressed.mp4" type="video/mp4">
+                        </video>
                     </div>
-                    <p class="video-caption">Learned RL policy traversing rough terrain (random step fields). The robot autonomously adapts its gait to exploit environmental protrusions.</p>
+                    <p class="video-caption">
+                        Learned RL policy traversing rough terrain (random step fields).
+                        The robot autonomously adapts its gait to exploit environmental protrusions.
+                    </p>
                 </div>
                 <div class="result-item">
                     <div class="video-container">
-                        <!-- Replace with: <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
-                        <div class="video-placeholder">
-                            <div class="play-icon">▶</div>
-                            <strong>Coming Soon</strong>
-                            <span style="margin-top:4px;">Geometric model — Rough terrain</span>
-                        </div>
+                        <video controls controlslist="nodownload" disablepictureinpicture playsinline preload="metadata">
+                            <source src="assets/videos/sidewinding_terrain_revised_compressed.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
-                    <p class="video-caption">Conventional geometric sidewinding model (A = 1.2 rad, ω = 0.50 Hz) on rough terrain. Baseline comparison.</p>
+                    <p class="video-caption">
+                        Conventional geometric sidewinding model (A = 1.2 rad, ω = 0.50 Hz) on rough terrain. Baseline comparison.
+                    </p>
                 </div>
                 <div class="result-item">
                     <div class="video-container">
-                        <!-- Replace with: <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
-                        <div class="video-placeholder">
-                            <div class="play-icon">▶</div>
-                            <strong>Coming Soon</strong>
-                            <span style="margin-top:4px;">Learned policy — Flat terrain</span>
-                        </div>
+                        <video controls controlslist="nodownload" disablepictureinpicture playsinline preload="metadata">
+                            <source src="assets/videos/trajectory_of_trained_model_plane.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
-                    <p class="video-caption">Learned RL policy on flat ground. The emergent gait approximates biological sidewinding as a consequence of physical constraints.</p>
+                    <p class="video-caption">
+                        Learned RL policy on flat ground. The emergent gait approximates biological sidewinding as a consequence of physical constraints.
+                    </p>
                 </div>
                 <div class="result-item">
                     <div class="video-container">
-                        <!-- Replace with: <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
-                        <div class="video-placeholder">
-                            <div class="play-icon">▶</div>
-                            <strong>Coming Soon</strong>
-                            <span style="margin-top:4px;">Geometric model — Flat terrain</span>
-                        </div>
+                        <video controls controlslist="nodownload" disablepictureinpicture playsinline preload="metadata">
+                            <source src="assets/videos/trajectory_of_sidewinding_plane.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
-                    <p class="video-caption">Geometric sidewinding model on flat ground. Maintains a constant periodic waveform across all joints.</p>
+                    <p class="video-caption">
+                        Geometric sidewinding model on flat ground. Maintains a constant periodic waveform across all joints.
+                    </p>
                 </div>
             </div>
         </section>
