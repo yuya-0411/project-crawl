@@ -281,19 +281,17 @@
         <div class="buttons">
             <a href="#" class="button" style="cursor: default;">
                 <img src="assets/icons/arxiv.svg" class="button-icon" alt="arXiv icon">
-                arXiv
+                Paper
                 <span class="coming-soon">Coming Soon</span>
             </a>
-            <a href="#" class="button" style="cursor: default;">
+            <a href="https://huggingface.co/YongdongWang/emergent-snake-locomotion" class="button" target="_blank">
                 <img src="assets/icons/huggingface.svg" class="button-icon" alt="Hugging Face icon">
                 Model
-                <span class="coming-soon">Coming Soon</span>
             </a>
-            <!-- <a href="#" class="button" style="cursor: default;">
-                <img src="assets/icons/youtube.svg" class="button-icon" alt="YouTube icon">
+            <a href="#overview-video" class="button">
+                <img src="assets/icons/youtube.svg" class="button-icon" alt="Video icon">
                 Video
-                <span class="coming-soon">Coming Soon</span>
-            </a> -->
+            </a>
         </div>
     </header>
 
@@ -325,7 +323,6 @@
         </div>
 
         <section id="overview-video">
-            <h2 class="category-title">Overview Video</h2>
             <div class="full-width-figure">
                 <div class="video-container">
                     <video controls controlslist="nodownload" disablepictureinpicture playsinline preload="metadata">
@@ -333,92 +330,58 @@
                         Your browser does not support the video tag.
                     </video>
                 </div>
-                <p class="video-caption">
-                    Overview video of the proposed snake robot locomotion learned through reinforcement learning.
-                </p>
             </div>
         </section>
 
-        <section id="method">
+        <div class="full-width-figure" style="max-width: 900px;">
+            <div class="figure-container">
+                <img src="assets/figures/framework.png" alt="Overview of the proposed framework">
+            </div>
+            <p class="figure-caption" style="text-align: center;">
+                The policy takes a 56-dimensional state as input. Per-link contact forces (highlighted) let the robot sense terrain through each link.
+            </p>
+        </div>
 
         <section id="method">
-            <h2 class="category-title">Method</h2>
+            <h2 class="category-title">Key Results</h2>
             <div class="method-grid">
                 <div class="method-card">
-                    <h3>Robot Model</h3>
-                    <p>11-link snake robot with 10 alternating yaw/pitch joints. Total length: 1.6 m. Each link has a tactile sensor.</p>
+                    <h3>Emergent Sidewinding</h3>
+                    <p>We provided no gait template. A sidewinding-like motion emerged from training, driven purely by the physical constraints of the robot and terrain.</p>
                 </div>
                 <div class="method-card">
-                    <h3>Observation Space (56-D)</h3>
-                    <p>10 joint positions + 10 joint velocities + 33 contact force components (11 links × 3 axes) + 3 global orientation angles. No predefined gait patterns.</p>
+                    <h3>Obstacle-Aided Locomotion</h3>
+                    <p>The robot learned to push off terrain protrusions as pivot points, twisting its body in 3D to get past obstacles.</p>
                 </div>
                 <div class="method-card">
-                    <h3>Training</h3>
-                    <p>PPO via RSL-RL in NVIDIA Isaac Lab. 4,000 parallel environments across 4 procedurally generated terrain types. Target forward velocity: 0.5 m/s.</p>
+                    <h3>Comparison with Geometric Model</h3>
+                    <p>The conventional sine-wave model tends to pile up on rough terrain and stall. The trained policy does not show this behavior.</p>
                 </div>
             </div>
-            <div class="full-width-figure">
+            <div class="full-width-figure" style="max-width: 700px;">
                 <div class="figure-container">
-                    <img src="assets/figures/framework.png" alt="Overview of the proposed framework">
+                    <img src="assets/figures/robot_overview.png" alt="Snake robot structure">
                 </div>
-                <p class="figure-caption">
-                    <strong>Fig. 2:</strong> Overview of the proposed framework. 
-                    The policy πθ receives a 56-dimensional state st, in which per-link contact forces 
-                    F<sub>contact</sub> (highlighted) enable the robot to sense physical terrain interactions 
-                    and emerge adaptive gaits without a predefined template.
+                <p class="figure-caption" style="text-align: center;">
+                    Snake robot with 11 links and 10 alternating yaw/pitch joints (total length: 1.6 m).
                 </p>
             </div>
         </section>
 
         <section id="results">
             <h2 class="category-title">Results</h2>
-            <p style="text-align: left; max-width: 1200px; margin: 10px auto; padding: 0 20px; font-style: italic; color: #666;">
-                <strong>Note:</strong> The figures below compare the <strong style="color: #e74c3c;">learned RL policy</strong> against a conventional
-                <strong style="color: #3498db;">geometric sidewinding model</strong> (sinusoidal gait, A = 1.2 rad, ω = 0.50 Hz).
-                Replace the placeholders with figures from the paper or simulation outputs.
-            </p>
-            <div class="results-grid">
-                <div class="result-item">
-                    <div class="figure-container">
-                        <img src="assets/figures/robot_overview.png" alt="Snake robot overview">
-                    </div>
-                    <p class="figure-caption">
-                        <strong>Fig. 1:</strong> Overview of the snake robot (11 links, 10 joints).
-                    </p>
+            <div class="full-width-figure">
+                <div class="figure-container">
+                    <img src="assets/figures/trajectories.png" alt="Navigation trajectories comparison">
                 </div>
-                <div class="result-item">
-                    <div class="figure-placeholder">
-                        <div class="figure-placeholder-inner">
-                            <strong>Fig. 3(b)</strong><br>Geometric sidewinding model<br><em>Joint angles on flat ground</em>
-                        </div>
-                    </div>
-                    <p class="figure-caption"><strong>Fig. 3(b):</strong> Joint angles of the geometric sidewinding model on flat ground. Constant periodic waveform across all joints. Place <code>assets/figures/fig3b_geometric.png</code> here.</p>
-                </div>
-                <div class="result-item">
-                    <div class="figure-placeholder">
-                        <div class="figure-placeholder-inner">
-                            <strong>Fig. 3(a)</strong><br>Learned RL policy<br><em>Joint angles on flat ground</em>
-                        </div>
-                    </div>
-                    <p class="figure-caption"><strong>Fig. 3(a):</strong> Joint angles of the learned policy on flat ground. The policy dynamically adjusts amplitude and period of each joint in response to the immediate state. Place <code>assets/figures/fig3a_learned.png</code> here.</p>
-                </div>
-                <div class="result-item">
-                    <div class="figure-container">
-                        <img src="assets/figures/trajectories.png" alt="Center-of-mass trajectories comparison">
-                    </div>
-                    <p class="figure-caption">
-                        <strong>Fig. 4:</strong> Comparison of center-of-mass (CoM) trajectories between the learned RL policy and the geometric model. The RL policy exhibits greater robustness and adaptability.
-                    </p>
-                </div>
+                <p class="figure-caption">
+                    Navigation trajectories on the Random Grid terrain. The learned policy (top) reaches the goal in 103 s; the geometric sidewinding model (bottom) takes 165 s and covers less ground.
+                </p>
             </div>
         </section>
 
         <section id="videos">
             <h2 class="category-title">Simulation Videos</h2>
-            <p style="text-align: left; max-width: 1200px; margin: 10px auto; padding: 0 20px; font-style: italic; color: #666;">
-                <strong>Note:</strong> Videos showing the learned RL policy and the geometric sidewinding baseline across different terrain types.
-                Place video files in <code>assets/videos/</code> to replace the placeholders.
-            </p>
             <div class="results-grid">
                 <div class="result-item">
                     <div class="video-container">
@@ -427,8 +390,7 @@
                         </video>
                     </div>
                     <p class="video-caption">
-                        Learned RL policy traversing rough terrain (random step fields).
-                        The robot autonomously adapts its gait to exploit environmental protrusions.
+                        Learned policy on rough terrain (Random Grid). The robot uses terrain protrusions as pivot points to move forward.
                     </p>
                 </div>
                 <div class="result-item">
@@ -450,7 +412,7 @@
                         </video>
                     </div>
                     <p class="video-caption">
-                        Learned RL policy on flat ground. The emergent gait approximates biological sidewinding as a consequence of physical constraints.
+                        Learned policy on flat ground. A sidewinding-like gait emerged without any template.
                     </p>
                 </div>
                 <div class="result-item">
